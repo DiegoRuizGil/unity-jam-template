@@ -1,0 +1,3 @@
+UNITY JAM TEMPLATE
+
+Unity Version: 2022.3.56f1

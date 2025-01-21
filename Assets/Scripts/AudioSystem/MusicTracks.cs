@@ -38,7 +38,7 @@ namespace AudioSystem
         {
             foreach (var (track, audioSource) in _tracks)
             {
-                if (_tracksState[track] != TrackState.Active)
+                if (_tracksState[track] != TrackState.Inactive)
                     continue;
                 if (audioSource.isPlaying)
                     continue;

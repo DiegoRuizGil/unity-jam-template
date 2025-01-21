@@ -18,7 +18,8 @@ namespace AudioSystem
         [SerializeField] private SFXCollection _sfxCollection;
         [SerializeField] private TracksCollection _tracksCollection;
 
-        [Header("SFX Pool")] [SerializeField] private int _sfxSourceAmount;
+        [Header("SFX Pool")]
+        [SerializeField] private int _sfxSourceAmount;
         [SerializeField] private AudioSource _sfxSourcePrefab;
         [SerializeField] private Transform _sfxPoolParent;
 

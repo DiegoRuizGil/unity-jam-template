@@ -23,22 +23,11 @@ namespace AudioSystem
             _tracksState = new Dictionary<Track, TrackState>();
         }
 
-        public void Init()
-        {
-            foreach (var (track, audioSource) in _tracks)
-            {
-                audioSource.volume = 0;
-                audioSource.loop = false;
-                audioSource.clip = _tracksCollection.GetRandomClip(track);
-                audioSource.Play();
-            }
-        }
-
         public void CheckTracks()
         {
             foreach (var (track, audioSource) in _tracks)
             {
-                if (_tracksState[track] != TrackState.Inactive)
+                if (_tracksState[track] != TrackState.Active)
                     continue;
                 if (audioSource.isPlaying)
                     continue;
@@ -51,14 +40,9 @@ namespace AudioSystem
         public void FadeIn(Track track, float duration, Ease easeType)
         {
             var audioSource = _tracks[track];
-            float volume = audioSource.volume;
 
             _tracksState[track] = TrackState.Transitioning;
-            DOTween.To(() => volume, x => volume = x, 1f, duration).SetEase(easeType)
-                .OnUpdate(() =>
-                {
-                    audioSource.volume = volume;
-                })
+            audioSource.DOFade(1f, duration).SetEase(easeType)
                 .OnComplete(() =>
                 {
                     _tracksState[track] = TrackState.Active;
@@ -68,14 +52,9 @@ namespace AudioSystem
         public void FadeOut(Track track, float duration, Ease easeType)
         {
             var audioSource = _tracks[track];
-            float volume = audioSource.volume;
-
+            
             _tracksState[track] = TrackState.Transitioning;
-            DOTween.To(() => volume, x => volume = x, 0f, duration).SetEase(easeType)
-                .OnUpdate(() =>
-                {
-                    audioSource.volume = volume;
-                })
+            audioSource.DOFade(0f, duration).SetEase(easeType)
                 .OnComplete(() =>
                 {
                     _tracksState[track] = TrackState.Inactive;

@@ -105,7 +105,6 @@ namespace AudioSystem
                 var audioSource = Instantiate(_musicSourcePrefab, _musicPoolParent);
                 _musicTracks.AddTrack(track.name, audioSource);
             }
-            _musicTracks.Init();
         }
         #endregion
     }
